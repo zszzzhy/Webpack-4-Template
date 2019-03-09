@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development",
+    "start": "webpack-dev-server --mode development --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -30,6 +30,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "clean-webpack-plugin": "^1.0.1",
+    "lodash": "^4.17.11",
+    "ramda": "^0.26.1",
     "webpack-md5-hash": "0.0.6"
   }
 }
