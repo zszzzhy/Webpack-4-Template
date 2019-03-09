@@ -6,9 +6,9 @@ const WebpackMd5Hash = require('webpack-md5-hash');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-    mode: "none",
+    mode: "development",
 
-    entry: { main: './src/index.js' },
+    entry: { bundle: './src/index.js' },
     // 开发环境
     devtool: 'eval-source-map',
     // 生产环境
@@ -33,6 +33,9 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
+                include: [
+                    path.resolve(__dirname, "src/styles")
+                ],
                 use: [
                     "style-loader",
                     MiniCssExtractPlugin.loader,
@@ -41,6 +44,20 @@ module.exports = {
                     "sass-loader"
                 ]
             },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                include: [
+                    path.resolve(__dirname, "src/images")
+                ],
+                loader: "file-loader"
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                include: [
+                    path.resolve(__dirname, "src/fonts")
+                ],
+                loader: "file-loader"
+            }
         ]
     },
 
@@ -49,11 +66,13 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "style.[contenthash].css",
         }),
+        // 关联 HTML
         new HtmlWebpackPlugin({
+            title: '自定义模板',
+            filename: 'index.html',
+            template: './src/index.html',
             inject: false,
             hash: true,
-            template: './src/index.html',
-            filename: 'index.html'
         }),
         new WebpackMd5Hash()
     ]

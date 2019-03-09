@@ -2,10 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.chunks.main.css %>">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.chunks.bundle.css %>">
 </head>
 <body>
     <div>Hello World!</div>
-    <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+    <script src="<%= htmlWebpackPlugin.files.chunks.bundle.entry %>"></script>
 </body>
 </html>
