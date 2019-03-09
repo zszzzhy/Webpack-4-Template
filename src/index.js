@@ -1,3 +1,3 @@
-import './style/main.scss';
+import './styles/style.scss';
 
 console.log('Hello World!');
