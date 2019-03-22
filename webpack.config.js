@@ -6,12 +6,13 @@ const WebpackMd5Hash = require("webpack-md5-hash");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
-	mode: "none",
-	entry: { bundle: "./src/index.js" },
-	// 开发环境
+	mode: "development",
+	entry: {
+		bundle: "./src/index.js"
+	},
+
 	devtool: "eval-source-map",
-	// 生产环境
-	// devtool: 'source-map',
+
 	devServer: {
 		contentBase: "./dist"
 	},
@@ -60,7 +61,6 @@ module.exports = {
 		new MiniCssExtractPlugin({
 			filename: "style.[contenthash].css"
 		}),
-		// 关联 HTML
 		new HtmlWebpackPlugin({
 			filename: "index.html",
 			template: "./src/index.html",
