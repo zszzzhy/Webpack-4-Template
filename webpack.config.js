@@ -1,25 +1,21 @@
 const path = require("path");
-
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
+const hotMiddlewareScript = "webpack-hot-middleware/client?path=/dist/__webpack_hmr&timeout=20000";
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const WebpackMd5Hash = require("webpack-md5-hash");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
 	mode: "development",
 	entry: {
-		bundle: "./src/index.js"
+		bundle: ["./src/index.js", hotMiddlewareScript]
 	},
 
 	devtool: "eval-source-map",
 
-	devServer: {
-		contentBase: "./dist"
-	},
-
 	output: {
 		path: path.resolve(__dirname, "dist"),
-		filename: "[name].[chunkhash].js"
+		filename: "[name].[hash].js",
+		publicPath: "/"
 	},
 
 	module: {
@@ -41,7 +37,7 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				include: [path.resolve(__dirname, "src/styles")],
-				use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"]
+				use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
 			},
 			{
 				test: /\.(png|svg|jpg|gif)$/,
@@ -58,15 +54,13 @@ module.exports = {
 
 	plugins: [
 		new CleanWebpackPlugin(["dist"]),
-		new MiniCssExtractPlugin({
-			filename: "style.[contenthash].css"
-		}),
 		new HtmlWebpackPlugin({
 			filename: "index.html",
 			template: "./src/index.html",
 			inject: false,
 			hash: true
 		}),
-		new WebpackMd5Hash()
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoEmitOnErrorsPlugin()
 	]
 };
